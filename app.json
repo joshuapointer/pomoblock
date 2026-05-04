@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Pomoblock",
+    "slug": "pomoblock",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "pomoblock",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.joshpointer.pomoblock",
+      "supportsTablet": false,
+      "deploymentTarget": "15.1",
+      "infoPlist": {
+        "NSUserActivityTypes": ["com.joshpointer.pomoblock.focus"]
+      },
+      "entitlements": {
+        "com.apple.developer.family-controls": true,
+        "com.apple.security.application-groups": [
+          "group.com.joshpointer.pomoblock"
+        ]
+      }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ],
+      [
+        "react-native-device-activity",
+        {
+          "appGroup": "group.com.joshpointer.pomoblock",
+          "shieldConfiguration": {
+            "title": "Covered by Pomoblock",
+            "subtitle": "Sit with it, or take an honest break.",
+            "primaryButtonLabel": "Wait it out",
+            "secondaryButtonLabel": "End block"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

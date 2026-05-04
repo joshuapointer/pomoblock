@@ -1,0 +1,317 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777853097330,
+  "projectRoot": "/home/joshpointer/developer/pomoblock",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "package.json",
+      "accessCount": 5,
+      "lastAccessed": 1777853743530,
+      "type": "file"
+    },
+    {
+      "path": "animations/timerRing.tsx",
+      "accessCount": 3,
+      "lastAccessed": 1777853967676,
+      "type": "file"
+    },
+    {
+      "path": "theme/tokens.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777853962720,
+      "type": "file"
+    },
+    {
+      "path": "app/onboarding.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777853964664,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/index.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853360760,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/01-onboarding.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853361553,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/02-home.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853361956,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/03-block-setup.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853362391,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/04a-cover-pomodoro.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853366564,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/04b-cover-friction.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853367341,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/05-break.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853367704,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/06-schedules.html",
+      "accessCount": 1,
+      "lastAccessed": 1777853368583,
+      "type": "file"
+    },
+    {
+      "path": "cd82a10d-0f6c-42b5-882a-922f0efbfedd/assets/tokens.css",
+      "accessCount": 1,
+      "lastAccessed": 1777853369074,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "accessCount": 1,
+      "lastAccessed": 1777853522787,
+      "type": "file"
+    },
+    {
+      "path": "app.json",
+      "accessCount": 1,
+      "lastAccessed": 1777853528368,
+      "type": "file"
+    },
+    {
+      "path": "babel.config.js",
+      "accessCount": 1,
+      "lastAccessed": 1777853529521,
+      "type": "file"
+    },
+    {
+      "path": "metro.config.js",
+      "accessCount": 1,
+      "lastAccessed": 1777853530341,
+      "type": "file"
+    },
+    {
+      "path": "expo-env.d.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853531737,
+      "type": "file"
+    },
+    {
+      "path": "theme/ThemeProvider.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853567300,
+      "type": "file"
+    },
+    {
+      "path": "components/Text.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853573737,
+      "type": "file"
+    },
+    {
+      "path": "components/Button.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853579497,
+      "type": "file"
+    },
+    {
+      "path": "components/Card.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853581392,
+      "type": "file"
+    },
+    {
+      "path": "components/Switch.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853587034,
+      "type": "file"
+    },
+    {
+      "path": "lib/storage.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853603282,
+      "type": "file"
+    },
+    {
+      "path": "state/types.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853608307,
+      "type": "file"
+    },
+    {
+      "path": "state/blocks.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853612917,
+      "type": "file"
+    },
+    {
+      "path": "state/session.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853619079,
+      "type": "file"
+    },
+    {
+      "path": "state/settings.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853622517,
+      "type": "file"
+    },
+    {
+      "path": "native/screen-time.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853653679,
+      "type": "file"
+    },
+    {
+      "path": "animations/breathOrb.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853721628,
+      "type": "file"
+    },
+    {
+      "path": "app/_layout.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853757403,
+      "type": "file"
+    },
+    {
+      "path": "app/index.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853758942,
+      "type": "file"
+    },
+    {
+      "path": "lib/useShieldActionBridge.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777853765018,
+      "type": "file"
+    },
+    {
+      "path": "app/(tabs)/_layout.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853793719,
+      "type": "file"
+    },
+    {
+      "path": "app/(tabs)/index.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853822875,
+      "type": "file"
+    },
+    {
+      "path": "app/(tabs)/blocks.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853830425,
+      "type": "file"
+    },
+    {
+      "path": "app/blocks/new.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853871943,
+      "type": "file"
+    },
+    {
+      "path": "app/(tabs)/schedules.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853898110,
+      "type": "file"
+    },
+    {
+      "path": "app/break.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853913666,
+      "type": "file"
+    },
+    {
+      "path": "app/cover-preview.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777853948186,
+      "type": "file"
+    },
+    {
+      "path": "eas.json",
+      "accessCount": 1,
+      "lastAccessed": 1777853983004,
+      "type": "file"
+    },
+    {
+      "path": "ios-shields/PomodoroShieldView.swift",
+      "accessCount": 1,
+      "lastAccessed": 1777854005132,
+      "type": "file"
+    },
+    {
+      "path": "ios-shields/FrictionShieldView.swift",
+      "accessCount": 1,
+      "lastAccessed": 1777854024477,
+      "type": "file"
+    },
+    {
+      "path": "ios-shields/PomoblockShieldConfiguration.swift",
+      "accessCount": 1,
+      "lastAccessed": 1777854037586,
+      "type": "file"
+    },
+    {
+      "path": "ios-shields/PomoblockShieldAction.swift",
+      "accessCount": 1,
+      "lastAccessed": 1777854046787,
+      "type": "file"
+    },
+    {
+      "path": "ios-shields/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1777854056628,
+      "type": "file"
+    },
+    {
+      "path": "MVP_NOTES.md",
+      "accessCount": 1,
+      "lastAccessed": 1777854114914,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

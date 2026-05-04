@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "Pomoblock — concept design",
+  "entry": "pomoblock-concept.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-05-03T21:46:02.493Z",
+  "updatedAt": "2026-05-03T21:46:02.670Z",
+  "sourceSkillId": "blog-post",
+  "metadata": {
+    "identifier": "pomoblock-concept",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}

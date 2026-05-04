@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pomoblock — Connect Screen Time</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  body {
+    width: 390px;
+    height: 844px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---- Status bar (drawn by frame in gallery; included for standalone) ---- */
+  .status {
+    flex: 0 0 47px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 18px 28px 0;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    pointer-events: none;
+  }
+  .status .right { display: inline-flex; align-items: center; gap: 6px; }
+  .status svg { width: 17px; height: 11px; fill: currentColor; }
+  .status .battery { width: 25px; }
+
+  /* ---- Onboarding chrome ---- */
+  .header {
+    flex: 0 0 auto;
+    padding: 16px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .step-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .step-pill .dots { display: inline-flex; gap: 3px; }
+  .step-pill .dot {
+    width: 5px; height: 5px; border-radius: 999px;
+    background: var(--border-2);
+  }
+  .step-pill .dot.on { background: var(--fg); }
+  .skip {
+    background: none; border: 0; padding: 0;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    flex: 1 1 auto;
+    padding: 32px 28px 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .lockup {
+    margin: 22px 0 28px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 32px;
+    line-height: 1.06;
+    letter-spacing: -0.028em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .sub {
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--muted);
+    margin-top: 14px;
+    text-wrap: pretty;
+  }
+
+  /* ---- Visual: stylized iOS Screen Time sheet ---- */
+  .sheet {
+    margin: 28px 0 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px 18px 16px;
+    box-shadow: var(--shadow-2);
+    position: relative;
+  }
+  .sheet::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 36px; height: 4px; border-radius: 999px;
+    background: var(--border-2);
+  }
+  .sheet-title {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .sheet-body {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .sheet-app {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+  }
+  .sheet-app .icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background:
+      radial-gradient(120% 120% at 30% 25%, var(--accent-2), var(--accent) 60%);
+    display: grid; place-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+  }
+  .sheet-app .meta { display: flex; flex-direction: column; }
+  .sheet-app .meta b {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .sheet-app .meta span {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .sheet-actions {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .sheet-btn {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--fg);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 999px;
+    padding: 9px 0;
+    text-align: center;
+  }
+  .sheet-btn.primary {
+    background: var(--fg);
+    color: var(--surface);
+    border-color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* ---- Footer / CTA ---- */
+  .footer {
+    flex: 0 0 auto;
+    padding: 16px 24px 14px;
+  }
+  .privacy {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+  .privacy svg { flex: 0 0 14px; margin-top: 1px; color: var(--accent); }
+  .privacy a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 2px; }
+
+  .cta {
+    width: 100%;
+    height: 52px;
+    border-radius: 16px;
+    border: 0;
+    background: var(--fg);
+    color: var(--surface);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    box-shadow: var(--shadow-2);
+  }
+
+  .home-indicator {
+    flex: 0 0 28px;
+    position: relative;
+  }
+  .home-indicator::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 8px;
+    transform: translateX(-50%);
+    width: 134px; height: 5px;
+    background: var(--fg);
+    border-radius: 999px;
+    opacity: 0.85;
+  }
+</style>
+</head>
+<body data-od-id="onboarding">
+
+  <div class="status" aria-hidden>
+    <span>9:41</span>
+    <span class="right">
+      <svg viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="0.6"/><rect x="4" y="5" width="3" height="6" rx="0.6"/><rect x="8" y="3" width="3" height="8" rx="0.6"/><rect x="12" y="0" width="3" height="11" rx="0.6"/></svg>
+      <svg viewBox="0 0 17 11"><path d="M8.5 1.5C5.5 1.5 2.7 2.6 0.5 4.6L2 6.1C3.8 4.5 6.1 3.6 8.5 3.6c2.4 0 4.7 0.9 6.5 2.5l1.5-1.5c-2.2-2-5-3.1-8-3.1zM3.5 7.6L5 9.1c1-0.9 2.2-1.4 3.5-1.4 1.3 0 2.5 0.5 3.5 1.4l1.5-1.5c-1.4-1.3-3.1-2-5-2-1.9 0-3.6 0.7-5 2zM6.5 10.6l2 2 2-2c-0.5-0.5-1.2-0.8-2-0.8s-1.5 0.3-2 0.8z"/></svg>
+      <svg class="battery" viewBox="0 0 25 11"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-opacity="0.45"/><rect x="22" y="3.5" width="1.5" height="4" rx="0.4" fill="currentColor" fill-opacity="0.45"/><rect x="2" y="2" width="18" height="7" rx="1.4"/></svg>
+    </span>
+  </div>
+
+  <div class="header">
+    <div class="step-pill">
+      <span class="dots">
+        <span class="dot on"></span><span class="dot on"></span><span class="dot"></span>
+      </span>
+      <span>Step 2 of 3</span>
+    </div>
+    <button class="skip" type="button">Skip</button>
+  </div>
+
+  <div class="hero">
+    <div class="lockup">
+      <div class="eyebrow">Connect Screen Time</div>
+      <h1>Trade the scroll<br/>for a 25-minute timer.</h1>
+      <p class="sub">When you open Instagram during a work block, Pomoblock covers it with a focus session — not a wall. Wait it out, get the minutes back.</p>
+    </div>
+
+    <div class="sheet" aria-hidden>
+      <div class="sheet-title">"Pomoblock" Would Like to Access Screen Time</div>
+      <p class="sheet-body">This will let Pomoblock see when you open apps you've added to a block, and replace the screen with a focus timer.</p>
+
+      <div class="sheet-app">
+        <div class="icon">P</div>
+        <div class="meta">
+          <b>Pomoblock</b>
+          <span>Apps, Categories, Web Domains</span>
+        </div>
+      </div>
+
+      <div class="sheet-actions">
+        <span class="sheet-btn">Don't Allow</span>
+        <span class="sheet-btn primary">Continue</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="privacy">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden>
+        <path d="M7 1.5l5 2v4.2c0 2.7-2 4.6-5 5.3-3-0.7-5-2.6-5-5.3V3.5l5-2z"/>
+        <path d="M5 7.5l1.4 1.4L9 6.3"/>
+      </svg>
+      <span>Pomoblock never reads what's behind the cover. Apps and categories you select live on-device. <a href="#">Read the privacy note</a>.</span>
+    </div>
+    <button class="cta" type="button">Allow Screen Time access</button>
+  </div>
+
+  <div class="home-indicator" aria-hidden></div>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pomoblock — concept</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  body {
+    background:
+      radial-gradient(60% 40% at 50% 0%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%),
+      var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+  }
+
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    background: color-mix(in oklch, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 14px 32px; gap: 18px;
+  }
+  .topnav .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; }
+  .topnav .brand .mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: var(--fg); color: var(--bg);
+    display: grid; place-items: center;
+    font-size: 13px; font-weight: 700; letter-spacing: -0.04em;
+  }
+  .topnav .links { margin-left: auto; display: flex; gap: 22px; font-size: 13px; color: var(--muted); }
+  .topnav .links a { text-decoration: none; color: inherit; letter-spacing: -0.005em; }
+  .topnav .links a:hover { color: var(--fg); }
+  .topnav .meta { font-size: 11px; text-transform: uppercase; letter-spacing: 0.10em; color: var(--accent); font-weight: 700; }
+
+  .doc { max-width: 1640px; margin: 0 auto; padding: 64px 32px 120px; }
+
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 56px; align-items: end;
+    padding-bottom: 64px; border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 20px;
+  }
+  .hero h1 { font-size: clamp(48px, 6.4vw, 96px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 600; text-wrap: balance; }
+  .hero h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .hero .deck { font-size: 18px; line-height: 1.5; color: var(--fg-2); max-width: 540px; margin-top: 24px; text-wrap: pretty; }
+  .hero .meta { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .hero .meta dl { margin: 0; padding: 0; display: grid; grid-template-columns: 100px 1fr; gap: 6px 16px; }
+  .hero .meta dt { text-transform: uppercase; letter-spacing: 0.10em; font-size: 10px; color: var(--faint); font-weight: 600; padding-top: 1px; }
+  .hero .meta dd { margin: 0; color: var(--fg-2); }
+
+  .section { padding: 80px 0 24px; }
+  .section-head { display: grid; grid-template-columns: minmax(0, 1fr) 1.6fr; gap: 56px; margin-bottom: 36px; align-items: end; }
+  .section-head .num { font-family: var(--font-display); font-size: 13px; color: var(--muted); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; }
+  .section-head h2 { font-size: clamp(32px, 3.4vw, 48px); line-height: 1.05; letter-spacing: -0.028em; font-weight: 600; text-wrap: balance; }
+  .section-head .desc { font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 540px; }
+
+  .phones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 28px; align-items: start; }
+  @media (max-width: 1280px) { .phones { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 980px)  { .phones { grid-template-columns: repeat(2, 1fr); } }
+  .phone-cell { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+  .iphone {
+    position: relative; width: 414px; height: 868px;
+    border-radius: 56px; padding: 12px;
+    background: linear-gradient(160deg, #2a2a2c 0%, #1a1a1c 50%, #0e0e10 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 0 2px #000 inset,
+      0 28px 60px -12px rgba(0,0,0,0.45),
+      0 8px 20px -8px rgba(0,0,0,0.35);
+    isolation: isolate; flex-shrink: 0;
+    transform: scale(0.92); transform-origin: top center;
+    margin-bottom: -64px;
+  }
+  .iphone::before, .iphone::after {
+    content: ''; position: absolute; width: 3px;
+    background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.06) 8%, transparent 16%, transparent 84%, rgba(255,255,255,0.04) 92%, transparent 100%);
+    top: 100px; bottom: 100px; pointer-events: none;
+  }
+  .iphone::before { left: -1px; } .iphone::after { right: -1px; }
+  .iphone .island {
+    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+    width: 124px; height: 36px; background: #000; border-radius: 999px; z-index: 5;
+  }
+  .iphone iframe { width: 100%; height: 100%; border: 0; border-radius: 44px; background: var(--bg); display: block; }
+  .iphone[data-theme="dark"] iframe { background: oklch(11% 0.008 250); }
+
+  .phone-label { text-align: center; max-width: 280px; }
+  .phone-label .num { font-family: var(--font-display); font-size: 11px; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .phone-label b { display: block; font-size: 17px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 4px; }
+  .phone-label span { font-size: 13px; color: var(--muted); line-height: 1.45; }
+
+  .ipad-stage { display: flex; justify-content: center; padding: 16px 0 0; }
+  .ipad {
+    position: relative; width: 612px; height: 864px;
+    border-radius: 36px; padding: 14px;
+    background: linear-gradient(160deg, #2a2a2c 0%, #1a1a1c 50%, #0e0e10 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 0 2px #000 inset,
+      0 28px 60px -12px rgba(0,0,0,0.45),
+      0 8px 20px -8px rgba(0,0,0,0.35);
+    transform: scale(1.05); transform-origin: top center; margin-bottom: 80px;
+  }
+  .ipad::after { content: ''; position: absolute; right: -3px; top: 80px; width: 4px; height: 56px; background: #0a0a0c; border-radius: 2px; }
+  .ipad .camera { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: #050507; border-radius: 999px; box-shadow: inset 0 0 0 0.5px #1f1f22; z-index: 5; }
+  .ipad .display { width: 100%; height: 100%; background: var(--bg); border-radius: 22px; overflow: hidden; }
+  .ipad iframe { width: 834px; height: 1194px; border: 0; transform: scale(calc(584 / 834)); transform-origin: top left; display: block; }
+
+  .mac-stage { display: flex; justify-content: center; padding: 16px 0 0; }
+  .laptop { position: relative; width: 1100px; margin-bottom: 40px; }
+  .laptop .lid {
+    position: relative; width: 100%; aspect-ratio: 1440 / 900;
+    background: #1a1a1a; border-radius: 18px 18px 4px 4px;
+    padding: 16px 16px 22px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05) inset, 0 14px 30px -10px rgba(0,0,0,0.45);
+  }
+  .laptop .lid::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 156px; height: 18px; background: #1a1a1a; border-radius: 0 0 12px 12px; z-index: 5; }
+  .laptop .lid::after  { content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: #0a0a0a; border-radius: 50%; box-shadow: 0 0 0 1px rgba(255,255,255,0.04); z-index: 6; }
+  .laptop .display { width: 100%; height: 100%; background: var(--bg); border-radius: 4px; overflow: hidden; position: relative; }
+  .laptop .display iframe { width: 1440px; height: 900px; border: 0; background: var(--bg); transform: scale(calc((1100 - 32) / 1440)); transform-origin: top left; }
+  .laptop .base { position: relative; width: 100%; height: 18px; margin-top: -1px; background: linear-gradient(to bottom, #c0c0c4 0%, #9a9a9e 70%, #7a7a7e 100%); border-radius: 0 0 8px 8px; box-shadow: 0 0 0 1px rgba(255,255,255,0.4) inset, 0 8px 16px -4px rgba(0,0,0,0.25); }
+  .laptop .base::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 130px; height: 5px; background: rgba(0,0,0,0.18); border-radius: 0 0 6px 6px; }
+
+  .caption { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; max-width: 880px; margin: 36px auto 0; padding-top: 24px; border-top: 1px solid var(--border); }
+  .caption .cap { font-size: 14px; line-height: 1.55; color: var(--muted); }
+  .caption .cap b { color: var(--fg); font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .notes { margin-top: 80px; padding-top: 48px; border-top: 1px solid var(--border); display: grid; grid-template-columns: minmax(0, 1fr) 2fr; gap: 48px; }
+  .notes h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.10em; color: var(--muted); font-weight: 600; }
+  .notes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .note h4 { font-size: 17px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 6px; }
+  .note p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+  .note p b { color: var(--fg-2); font-weight: 600; }
+
+  .palette { margin-top: 28px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .swatch { width: 48px; height: 48px; border-radius: 10px; border: 1px solid var(--border); position: relative; }
+  .swatch::after { content: attr(data-name); position: absolute; top: 100%; left: 0; margin-top: 6px; font-size: 10px; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
+
+  footer { margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body data-od-id="gallery">
+
+  <header class="topnav">
+    <span class="brand"><span class="mark">P</span> Pomoblock</span>
+    <span class="meta">v0.1 — concept</span>
+    <nav class="links">
+      <a href="#flow">iPhone flow</a>
+      <a href="#cover">The cover</a>
+      <a href="#ipad">iPad</a>
+      <a href="#mac">Mac</a>
+      <a href="#system">System</a>
+    </nav>
+  </header>
+
+  <div class="doc">
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Native — iOS · iPadOS · macOS · concept design</div>
+        <h1>Cover.<br/><em>Don't just nag.</em></h1>
+        <p class="deck">When you reach for Instagram during a work block, Pomoblock takes over the screen with a 25-minute pomodoro. The clock ticks across iPhone, iPad and Mac in lockstep — wait it out, get the minutes back. No streaks shamed, no apps deleted.</p>
+      </div>
+      <aside class="meta">
+        <dl>
+          <dt>For</dt><dd>Knowledge workers · focus-seekers</dd>
+          <dt>Surface</dt><dd>iPhone-first, iPad split-view, Mac menu bar</dd>
+          <dt>Mechanism</dt><dd>Apple Family Controls / Screen Time API</dd>
+          <dt>Posture</dt><dd>Calm, native, OLED-friendly cover</dd>
+          <dt>This concept</dt><dd>9 screens · 2 cover takes</dd>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="section" id="flow">
+      <div class="section-head">
+        <div>
+          <div class="num">01 — Daily flow</div>
+          <h2>Set it once.<br/>The phone respects it.</h2>
+        </div>
+        <p class="desc">Onboarding is one Screen Time grant and one block to start. The home screen is what's covering right now and what's covering next. Setup is a familiar iOS picker, but with a single design choice the user makes: what should the covered app feel like — a timer, or a friction layer?</p>
+      </div>
+
+      <div class="phones">
+        <div class="phone-cell">
+          <div class="iphone"><span class="island" aria-hidden></span><iframe src="01-onboarding.html" loading="lazy" title="Onboarding"></iframe></div>
+          <div class="phone-label"><div class="num">01</div><b>Connect Screen Time</b><span>One permission, one promise: covered, not blocked.</span></div>
+        </div>
+        <div class="phone-cell">
+          <div class="iphone"><span class="island" aria-hidden></span><iframe src="02-home.html" loading="lazy" title="Home"></iframe></div>
+          <div class="phone-label"><div class="num">02</div><b>Today, at a glance</b><span>What's covering now, what's queued, today's pomodoros.</span></div>
+        </div>
+        <div class="phone-cell">
+          <div class="iphone"><span class="island" aria-hidden></span><iframe src="03-block-setup.html" loading="lazy" title="Block setup"></iframe></div>
+          <div class="phone-label"><div class="num">03</div><b>Build a block</b><span>Pick categories or specific apps. Choose timer vs. friction layer.</span></div>
+        </div>
+        <div class="phone-cell">
+          <div class="iphone"><span class="island" aria-hidden></span><iframe src="06-schedules.html" loading="lazy" title="Schedules"></iframe></div>
+          <div class="phone-label"><div class="num">04</div><b>Schedules &amp; smart triggers</b><span>Time, location, calendar, Focus mode — every angle covered.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cover">
+      <div class="section-head">
+        <div>
+          <div class="num">02 — The cover screen</div>
+          <h2>The hardest screen<br/>in the app.</h2>
+        </div>
+        <p class="desc">When a covered app is opened, Pomoblock takes over the foreground. Two takes here, both OLED-dark and intentionally calm — punishment never beat patience. The user picks one when the block is built.</p>
+      </div>
+
+      <div class="phones" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="phone-cell">
+          <div class="iphone" data-theme="dark"><span class="island" aria-hidden></span><iframe src="04a-cover-pomodoro.html" loading="lazy" title="Cover — pomodoro"></iframe></div>
+          <div class="phone-label"><div class="num">Take 1</div><b>Full pomodoro timer</b><span>The covered app becomes the timer. 21 minutes left — wait it out, or take an honest break.</span></div>
+        </div>
+        <div class="phone-cell">
+          <div class="iphone" data-theme="dark"><span class="island" aria-hidden></span><iframe src="04b-cover-friction.html" loading="lazy" title="Cover — friction"></iframe></div>
+          <div class="phone-label"><div class="num">Take 2</div><b>Breathe, then decide</b><span>10s breath, then three honest options: wait, 5-min budget, or end the block.</span></div>
+        </div>
+        <div class="phone-cell">
+          <div class="iphone"><span class="island" aria-hidden></span><iframe src="05-break.html" loading="lazy" title="Break"></iframe></div>
+          <div class="phone-label"><div class="num">+ Break</div><b>Five honest minutes</b><span>Light again. Covered apps stay covered during the break — only the timer flips.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ipad">
+      <div class="section-head">
+        <div>
+          <div class="num">03 — iPadOS</div>
+          <h2>The dashboard<br/>you didn't know<br/>you wanted.</h2>
+        </div>
+        <p class="desc">iPad gets a sidebar + main split. The same blocks you set up on iPhone, but with room to breathe — the timer ring as a real artefact, the week as a chart, blocks as a glanceable list. Multitasking-aware: covered apps stay covered when split with another app.</p>
+      </div>
+
+      <div class="ipad-stage">
+        <div class="ipad">
+          <span class="camera" aria-hidden></span>
+          <div class="display"><iframe src="ipad-home.html" loading="lazy" title="iPad — Today"></iframe></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mac">
+      <div class="section-head">
+        <div>
+          <div class="num">04 — macOS</div>
+          <h2>Lives in the menu bar.<br/>Owns the desktop.</h2>
+        </div>
+        <p class="desc">A menu bar pop-down for fast control. The cover lives inside the offending app's window — open Slack during Deep Work and Slack itself becomes the timer. ⌃⇧. ends the block on every device at once.</p>
+      </div>
+
+      <div class="mac-stage">
+        <div class="laptop">
+          <div class="lid"><div class="display"><iframe src="mac-home.html" loading="lazy" title="Mac — menu bar + cover"></iframe></div></div>
+          <div class="base" aria-hidden></div>
+        </div>
+      </div>
+
+      <div class="caption">
+        <div class="cap"><b>Menu bar pop-down</b>The countdown is also the menu bar icon — see your minutes-left at all times. Quick controls, keyboard shortcuts, syncing status. Two clicks to end the block on all three devices.</div>
+        <div class="cap"><b>The covered window</b>We don't dim or warn the user — we replace the app content with the same dark cover, inside the app's own window chrome. Slack still looks like Slack; it just isn't Slack right now.</div>
+      </div>
+    </section>
+
+    <section class="section" id="system">
+      <div class="notes">
+        <h3>Design system — modern minimal · v0.1</h3>
+        <div>
+          <div class="notes-grid">
+            <div class="note"><h4>Calm, not punitive</h4><p>The cover is dark, slow, generous. No red, no shake, no shame. <b>The user is the one in control</b> — the timer is just a held breath.</p></div>
+            <div class="note"><h4>One accent, used twice</h4><p>A single saturated blue handles the live indicator, the timer ring, and the primary CTA. <b>Everything else is greyscale</b>.</p></div>
+            <div class="note"><h4>Typography</h4><p>SF Pro Display for the big numerals at thin weights — feels meditative, not military. SF Pro Text for body. <b>Tabular numerics everywhere counts matter</b>.</p></div>
+            <div class="note"><h4>Cross-device sync</h4><p>One block, one timer, three devices. Ending a block on Mac releases iPhone and iPad in the same tick. <b>iCloud-only — Pomoblock has no servers</b>.</p></div>
+          </div>
+          <div class="palette">
+            <span class="swatch" data-name="bg" style="background: oklch(99% 0.002 240);"></span>
+            <span class="swatch" data-name="surface" style="background: oklch(100% 0 0);"></span>
+            <span class="swatch" data-name="border" style="background: oklch(92% 0.005 250);"></span>
+            <span class="swatch" data-name="muted" style="background: oklch(54% 0.012 250);"></span>
+            <span class="swatch" data-name="fg" style="background: oklch(18% 0.012 250);"></span>
+            <span class="swatch" data-name="accent" style="background: oklch(58% 0.18 255);"></span>
+            <span class="swatch" data-name="dark bg" style="background: oklch(11% 0.008 250);"></span>
+            <span class="swatch" data-name="dark accent" style="background: oklch(72% 0.16 255);"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Pomoblock · concept · 2026</span>
+      <span>Modern-minimal direction · 9 screens · 1 system</span>
+    </footer>
+
+  </div>
+
+</body>
+</html>

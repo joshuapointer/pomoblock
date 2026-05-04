@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pomoblock — iPad</title>
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  body {
+    width: 834px;
+    height: 1194px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 36px 1fr;
+  }
+
+  /* iPad status bar (compact at top) */
+  .status {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px 0;
+    font-size: 14px; font-weight: 600;
+    color: var(--fg);
+  }
+  .status .right { display: inline-flex; align-items: center; gap: 6px; }
+  .status svg { width: 17px; height: 11px; fill: currentColor; }
+  .status .battery { width: 25px; }
+
+  /* Sidebar */
+  .sidebar {
+    grid-row: 2;
+    grid-column: 1;
+    border-right: 1px solid var(--border);
+    background: var(--surface-2);
+    padding: 18px 16px 16px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 6px 16px;
+  }
+  .brand .mark {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--fg);
+    color: var(--bg);
+    display: grid; place-items: center;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+  .brand b {
+    font-size: 16px;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+  .nav-group {
+    margin-top: 4px;
+  }
+  .nav-group .head {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 12px 8px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-2);
+    cursor: pointer;
+  }
+  .nav-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.6; flex: 0 0 16px; }
+  .nav-item.on {
+    background: var(--surface);
+    color: var(--fg);
+    box-shadow: var(--shadow-1);
+    font-weight: 600;
+  }
+  .nav-item.on svg { color: var(--accent); }
+  .nav-item .right {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--faint);
+    font-feature-settings: "tnum" 1;
+  }
+  .nav-item.live .right {
+    background: var(--accent);
+    color: white;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-weight: 600;
+  }
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 12px 8px 6px;
+  }
+  .sidebar-footer .me {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px;
+    border-radius: 9px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .sidebar-footer .me .av {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, oklch(70% 0.14 30), oklch(60% 0.18 320));
+    display: grid; place-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: -0.04em;
+  }
+  .sidebar-footer .me b {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .sidebar-footer .me span {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Main */
+  .main {
+    grid-row: 2;
+    grid-column: 2;
+    overflow: hidden;
+    padding: 24px 32px;
+    display: flex; flex-direction: column;
+    gap: 18px;
+  }
+  .main-head {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .main-head h1 {
+    font-size: 30px;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .main-head .actions { display: flex; gap: 8px; }
+  .btn {
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn.primary {
+    background: var(--fg);
+    color: var(--surface);
+    border-color: var(--fg);
+  }
+  .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.7; }
+
+  /* Hero status row */
+  .hero {
+    background:
+      radial-gradient(60% 100% at 0% 0%, color-mix(in oklch, var(--accent) 10%, transparent), transparent 70%),
+      var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .live-row {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 22%, transparent);
+  }
+  .hero h2 {
+    font-size: 44px;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .hero h2 .a { color: var(--accent); }
+  .hero .meta {
+    display: flex; gap: 16px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hero .meta .sep { width: 3px; height: 3px; border-radius: 999px; background: var(--border-2); margin: auto 0; }
+
+  .ring {
+    width: 220px; height: 220px;
+    margin-left: auto;
+    position: relative;
+  }
+  .ring svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+  .ring .track    { fill: none; stroke: var(--border); stroke-width: 6; }
+  .ring .progress { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round;
+                    stroke-dasharray: 628.3; stroke-dashoffset: 458.7; }
+  .ring .center {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    text-align: center;
+  }
+  .ring .center b {
+    font-family: var(--font-display);
+    font-weight: 200;
+    font-size: 56px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .ring .center span {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* Stats grid */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .stat .v {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .v small { font-size: 14px; color: var(--muted); font-weight: 500; }
+  .stat .l { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; }
+  .stat .delta {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--good);
+    font-weight: 600;
+  }
+
+  /* Two-column lower */
+  .lower {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 18px;
+    display: flex; flex-direction: column;
+  }
+  .panel-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .panel-head h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .panel-head a {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* Block list */
+  .blocks {
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .block {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+  }
+  .block.on {
+    background: var(--surface-2);
+    border-color: var(--border);
+  }
+  .block .swatch {
+    width: 8px; height: 26px;
+    border-radius: 4px;
+    background: var(--border-2);
+  }
+  .block.on .swatch { background: var(--accent); }
+  .block b {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .block span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+    font-feature-settings: "tnum" 1;
+  }
+  .block .toggle {
+    margin-left: auto;
+    width: 36px; height: 22px;
+    border-radius: 999px;
+    background: var(--border-2);
+    position: relative;
+  }
+  .block .toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    border-radius: 999px;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.18);
+  }
+  .block.on .toggle { background: var(--accent); }
+  .block.on .toggle::after { transform: translateX(14px); }
+
+  /* Sparkline panel */
+  .spark {
+    flex: 1;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+  }
+  .spark-canvas {
+    flex: 1;
+    margin-top: 6px;
+  }
+  .legend-mini {
+    display: flex; gap: 16px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .legend-mini i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; margin-right: 6px; vertical-align: 1px; }
+</style>
+</head>
+<body data-od-id="ipad-home">
+
+  <div class="status" aria-hidden>
+    <span>9:41 AM Wed 4 May</span>
+    <span class="right">
+      <span style="font-size:12px; color:var(--muted)">Pomoblock — Deep Work</span>
+      <svg viewBox="0 0 17 11"><rect x="0" y="7" width="3" height="4" rx="0.6"/><rect x="4" y="5" width="3" height="6" rx="0.6"/><rect x="8" y="3" width="3" height="8" rx="0.6"/><rect x="12" y="0" width="3" height="11" rx="0.6"/></svg>
+      <svg viewBox="0 0 17 11"><path d="M8.5 1.5C5.5 1.5 2.7 2.6 0.5 4.6L2 6.1C3.8 4.5 6.1 3.6 8.5 3.6c2.4 0 4.7 0.9 6.5 2.5l1.5-1.5c-2.2-2-5-3.1-8-3.1z"/></svg>
+      <svg class="battery" viewBox="0 0 25 11"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-opacity="0.45"/><rect x="22" y="3.5" width="1.5" height="4" rx="0.4" fill="currentColor" fill-opacity="0.45"/><rect x="2" y="2" width="18" height="7" rx="1.4"/></svg>
+    </span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="mark">P</div>
+      <b>Pomoblock</b>
+    </div>
+
+    <div class="nav-group">
+      <div class="head">Workspace</div>
+      <div class="nav-item on">
+        <svg viewBox="0 0 16 16"><path d="M3 11l5-4 5 4v3H3z"/><path d="M3 11l5-4 5 4"/></svg>
+        Today
+        <span class="right">live</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M2 6h12M5 1.5v3M11 1.5v3"/></svg>
+        Schedules
+        <span class="right">4</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M6 6v6M10 6v6M2 8h12"/></svg>
+        Blocks
+        <span class="right">7</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><path d="M2 13V8M6 13V5M10 13V9M14 13V3"/></svg>
+        Stats
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="head">Active blocks</div>
+      <div class="nav-item live">
+        <svg viewBox="0 0 16 16" style="color: var(--accent);"><path d="M3 13V3l5 3 5-3v10"/></svg>
+        Deep Work
+        <span class="right">2:14</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><path d="M3 8h10M3 5h10M3 11h7"/></svg>
+        Lunch — phone down
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><path d="M11 2.4A6 6 0 1 0 13.6 9 5 5 0 0 1 11 2.4z"/></svg>
+        Wind-down
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="head">Devices</div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><rect x="4" y="2" width="8" height="12" rx="1.5"/><circle cx="8" cy="12" r="0.6"/></svg>
+        iPhone — synced
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="9" rx="1.5"/><path d="M5.5 14h5"/></svg>
+        MacBook — covering
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="me">
+        <span class="av">JP</span>
+        <div>
+          <b>Josh Pointer</b>
+          <span>iCloud · 3 devices</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-head">
+      <h1>Today</h1>
+      <div class="actions">
+        <button class="btn">
+          <svg viewBox="0 0 16 16"><path d="M8 2v4M8 10v4M2 8h4M10 8h4"/></svg>
+          End block
+        </button>
+        <button class="btn primary">
+          <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg>
+          New block
+        </button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div>
+        <div class="live-row">
+          <span class="live-dot" aria-hidden></span>
+          <span>Deep Work — covering 12 apps</span>
+        </div>
+        <h2><span class="a">2h 14m</span><br/>left in this block.</h2>
+        <div class="meta">
+          <span>Started 9:00</span>
+          <span class="sep" aria-hidden></span>
+          <span>Ends 12:00</span>
+          <span class="sep" aria-hidden></span>
+          <span>Mon–Fri</span>
+          <span class="sep" aria-hidden></span>
+          <span>5 of 8 pomodoros</span>
+        </div>
+      </div>
+      <div class="ring" aria-hidden>
+        <svg viewBox="0 0 200 200">
+          <circle class="track"    cx="100" cy="100" r="100"/>
+          <circle class="progress" cx="100" cy="100" r="100"/>
+        </svg>
+        <div class="center">
+          <b>21:43</b>
+          <span>session 5</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="v">4<small> / 8</small></div>
+        <div class="l">Pomodoros today</div>
+        <div class="delta">▲ same as Tue</div>
+      </div>
+      <div class="stat">
+        <div class="v">1h 40m</div>
+        <div class="l">Focus time</div>
+        <div class="delta">▲ +14m vs avg</div>
+      </div>
+      <div class="stat">
+        <div class="v">12<small>d</small></div>
+        <div class="l">Streak</div>
+        <div class="delta" style="color: var(--accent);">★ longest yet</div>
+      </div>
+      <div class="stat">
+        <div class="v">22<small>m</small></div>
+        <div class="l">Social budget left</div>
+        <div class="delta" style="color: var(--muted);">— 8m used today</div>
+      </div>
+    </section>
+
+    <section class="lower">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Blocks today</h3>
+          <a href="#">Manage →</a>
+        </div>
+        <div class="blocks">
+          <div class="block on">
+            <span class="swatch" aria-hidden></span>
+            <div>
+              <b>Deep Work</b>
+              <span>9:00 – 12:00 · 19 items</span>
+            </div>
+            <span class="toggle" aria-hidden></span>
+          </div>
+          <div class="block on">
+            <span class="swatch" aria-hidden></span>
+            <div>
+              <b>Lunch — phone down</b>
+              <span>12:30 – 13:00 · 12 items</span>
+            </div>
+            <span class="toggle" aria-hidden></span>
+          </div>
+          <div class="block on">
+            <span class="swatch" aria-hidden></span>
+            <div>
+              <b>Evening wind-down</b>
+              <span>21:30 – 07:00 · 26 items</span>
+            </div>
+            <span class="toggle" aria-hidden></span>
+          </div>
+          <div class="block">
+            <span class="swatch" aria-hidden></span>
+            <div>
+              <b>Meeting hours</b>
+              <span>Calendar trigger · 31 items</span>
+            </div>
+            <span class="toggle" aria-hidden></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel spark">
+        <div class="panel-head">
+          <h3>Last 7 days</h3>
+          <a href="#">All stats →</a>
+        </div>
+        <div class="spark-canvas">
+          <svg viewBox="0 0 320 160" preserveAspectRatio="none" style="width:100%; height:100%">
+            <!-- grid -->
+            <line x1="0" y1="40" x2="320" y2="40"  stroke="oklch(92% 0.005 250)" stroke-width="1"/>
+            <line x1="0" y1="80" x2="320" y2="80"  stroke="oklch(92% 0.005 250)" stroke-width="1"/>
+            <line x1="0" y1="120" x2="320" y2="120" stroke="oklch(92% 0.005 250)" stroke-width="1"/>
+            <!-- bars (focus minutes per day) -->
+            <g fill="oklch(58% 0.18 255)">
+              <rect x="10"  y="80"  width="32" height="80"  rx="4"/>
+              <rect x="54"  y="60"  width="32" height="100" rx="4"/>
+              <rect x="98"  y="100" width="32" height="60"  rx="4"/>
+              <rect x="142" y="40"  width="32" height="120" rx="4"/>
+              <rect x="186" y="50"  width="32" height="110" rx="4"/>
+              <rect x="230" y="30"  width="32" height="130" rx="4"/>
+              <rect x="274" y="68"  width="32" height="92"  rx="4"/>
+            </g>
+            <!-- avg line -->
+            <line x1="0" y1="68" x2="320" y2="68" stroke="oklch(54% 0.012 250)" stroke-dasharray="3,3" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="legend-mini">
+          <span><i style="background: var(--accent);"></i>Focus minutes</span>
+          <span><i style="background: var(--muted); border-radius: 0; height: 1px; margin-bottom: 3px"></i>4-week average</span>
+          <span style="margin-left:auto; color: var(--fg-2); font-weight: 600;">12.4h this week · ▲ 18%</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
