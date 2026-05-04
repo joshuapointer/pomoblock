@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Pomoblock — Splash mark on transparent. -->
+  <!-- expo-splash-screen paints background (#E4ECFB) and centers this image. -->
+  <circle cx="512" cy="512" r="270"
+          fill="none"
+          stroke="#2563EB"
+          stroke-width="110"/>
+</svg>

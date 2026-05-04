@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Pomoblock — Android adaptive icon foreground. -->
+  <!-- Mark inset to safe zone (Android crops outer ~33%), background painted by adaptive plugin. -->
+  <circle cx="512" cy="512" r="200"
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-width="82"/>
+</svg>

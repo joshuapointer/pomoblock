@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Pomoblock — App Icon (Focus Ring) -->
+  <!-- iOS applies the squircle mask; full-bleed accent + centered ring. -->
+  <rect width="1024" height="1024" fill="#2563EB"/>
+  <circle cx="512" cy="512" r="270"
+          fill="none"
+          stroke="#FFFFFF"
+          stroke-width="110"/>
+</svg>

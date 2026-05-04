@@ -13,17 +13,39 @@
       "supportsTablet": false,
       "deploymentTarget": "15.1",
       "infoPlist": {
-        "NSUserActivityTypes": ["com.joshpointer.pomoblock.focus"]
+        "NSUserActivityTypes": [
+          "com.joshpointer.pomoblock.focus",
+          "com.joshpointer.pomoblock.focus",
+          "com.joshpointer.pomoblock.focus"
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       },
       "entitlements": {
         "com.apple.developer.family-controls": true,
         "com.apple.security.application-groups": [
+          "group.com.joshpointer.pomoblock",
+          "group.com.joshpointer.pomoblock",
           "group.com.joshpointer.pomoblock"
         ]
       }
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 192,
+          "resizeMode": "contain",
+          "backgroundColor": "#E4ECFB",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "imageWidth": 192,
+            "resizeMode": "contain",
+            "backgroundColor": "#0E1015"
+          }
+        }
+      ],
       [
         "expo-build-properties",
         {
@@ -47,6 +69,57 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "com.joshpointer.pomoblock.ShieldConfiguration",
+                  "targetName": "ShieldConfiguration",
+                  "entitlements": {
+                    "com.apple.developer.family-controls": true,
+                    "com.apple.security.application-groups": [
+                      "group.com.joshpointer.pomoblock"
+                    ]
+                  }
+                },
+                {
+                  "bundleIdentifier": "com.joshpointer.pomoblock.ShieldAction",
+                  "targetName": "ShieldAction",
+                  "entitlements": {
+                    "com.apple.developer.family-controls": true,
+                    "com.apple.security.application-groups": [
+                      "group.com.joshpointer.pomoblock"
+                    ]
+                  }
+                },
+                {
+                  "bundleIdentifier": "com.joshpointer.pomoblock.ActivityMonitorExtension",
+                  "targetName": "ActivityMonitorExtension",
+                  "entitlements": {
+                    "com.apple.developer.family-controls": true,
+                    "com.apple.security.application-groups": [
+                      "group.com.joshpointer.pomoblock"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "90e9ddfe-2cc8-4ccb-a7eb-8e8d9b38e2a8"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/90e9ddfe-2cc8-4ccb-a7eb-8e8d9b38e2a8"
+    },
+    "android": {}
   }
 }
