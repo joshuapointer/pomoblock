@@ -7,15 +7,13 @@
     "icon": "./assets/icon.png",
     "scheme": "pomoblock",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "owner": "joshpointer-dev",
     "ios": {
       "bundleIdentifier": "com.joshpointer.pomoblock",
       "supportsTablet": false,
       "deploymentTarget": "15.1",
       "infoPlist": {
         "NSUserActivityTypes": [
-          "com.joshpointer.pomoblock.focus",
-          "com.joshpointer.pomoblock.focus",
           "com.joshpointer.pomoblock.focus"
         ],
         "ITSAppUsesNonExemptEncryption": false
@@ -23,8 +21,6 @@
       "entitlements": {
         "com.apple.developer.family-controls": true,
         "com.apple.security.application-groups": [
-          "group.com.joshpointer.pomoblock",
-          "group.com.joshpointer.pomoblock",
           "group.com.joshpointer.pomoblock"
         ]
       }
